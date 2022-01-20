@@ -7,8 +7,8 @@ import (
 	"strconv"
 )
 
-const cakes = 4
-const apple = 5
+const cakes = 20
+const apple = 25
 
 func CountTotalBox(w http.ResponseWriter, r *http.Request) {
 	var array_cakes []int
@@ -30,7 +30,7 @@ func CountTotalBox(w http.ResponseWriter, r *http.Request) {
 				result = fmt.Sprintf("Ainun dapat membuat sebanyak %s box dan setiap box nya ada %s kue dan ada %s apel", strconv.Itoa(a1), strconv.Itoa(cakes/a1), strconv.Itoa(apple/a2))
 			} else {
 				result = "kue dan apel tidak bisa di bagi rata"
-				w.WriteHeader(404)
+				w.WriteHeader(500)
 			}
 		}
 	}
