@@ -4,12 +4,16 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/jinzhu/gorm"
+	"github.com/joho/godotenv"
 )
 
 func Connect() *sql.DB {
-	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/test-golang-1")
+	godotenv.Load()
+
+	db, err := sql.Open("mysql", os.Getenv("DB_URL"))
 
 	if err != nil {
 		log.Fatal(err)
@@ -21,7 +25,7 @@ func Connect() *sql.DB {
 func GormConnect() *gorm.DB {
 
 	var err error
-	db, err := gorm.Open("mysql", "root:root@tcp(127.0.0.1:3306)/test-golang-1")
+	db, err := gorm.Open("mysql", os.Getenv("DB_URL"))
 
 	if err != nil {
 		fmt.Println(err)

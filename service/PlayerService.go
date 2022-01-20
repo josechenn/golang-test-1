@@ -76,7 +76,6 @@ func InsertPlayer(w http.ResponseWriter, r *http.Request) {
 
 	player_number, _ := strconv.Atoi(r.FormValue("player_number"))
 	player_name := r.FormValue("player_name")
-	position := r.FormValue("position")
 	team_id := r.FormValue("team_id")
 
 	if err := db.Table("player").Where("player_number = ?", player_number).Where("team_id = ?", team_id).Find(&player).Error; err != nil {
@@ -92,7 +91,6 @@ func InsertPlayer(w http.ResponseWriter, r *http.Request) {
 			player := model.Player{
 				PlayerNumber: player_number,
 				PlayerName:   player_name,
-				Position:     position,
 				TeamId:       team_id,
 				Date:         t.String(),
 			}
@@ -123,7 +121,6 @@ func UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	player_number, _ := strconv.Atoi(r.FormValue("player_number"))
 	player_id, _ := strconv.Atoi(r.FormValue("player_id"))
 	player_name := r.FormValue("player_name")
-	position := r.FormValue("position")
 	team_id := r.FormValue("team_id")
 
 	db.Table("player").Where("player_id = ?", player_id).Find(&player)
@@ -138,7 +135,6 @@ func UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			player := model.Player{
 				PlayerNumber: player_number,
 				PlayerName:   player_name,
-				Position:     position,
 				TeamId:       team_id,
 				Date:         t.String(),
 			}

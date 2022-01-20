@@ -1,33 +1,21 @@
 version: "3"
 
 services:
-  app:
-    build:
-      dockerfile: Dockerfile.dev
-      context: .
-      args:
-        VERSION: "development"
-    volumes:
-      - .:/go/src/myapp
-      - ${HOME}/go:/go
-    container_name: testRedis
-    ports:
-      - "1234:1234"
-    env_file: ".env"
   db:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: "db"
-      MYSQL_USER: "user"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${WORKSPACE_TIMEZONE} 
     ports:
       - "3306:3306"
     expose:
       - "3306"
     volumes:
-      - my-db:/var/lib/mysql
+      - my-db:/var/lib/mysql  
 volumes:
   my-db:
   myapp:
