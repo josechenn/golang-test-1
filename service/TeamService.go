@@ -2,7 +2,6 @@ package service
 
 import (
 	"encoding/json"
-	"fmt"
 	"myapp/config"
 	"myapp/model"
 	"net/http"
@@ -49,7 +48,6 @@ func ReturnTeamDetail(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 	team_id := r.URL.Query()["team_id"]
 	team_name := r.URL.Query()["team_name"]
-	fmt.Println(team_id)
 
 	if team_id == nil && team_name == nil {
 		result := "No team id or team name provided"
