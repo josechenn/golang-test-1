@@ -36,6 +36,5 @@ func GormConnect() *gorm.DB {
 		panic("failed to connect database")
 	}
 
-	db.LogMode(true)
 	return db
 }

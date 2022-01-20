@@ -107,7 +107,7 @@ func InsertTeam(w http.ResponseWriter, r *http.Request) {
 		team := model.Team{
 			TeamId:   team_id,
 			TeamName: team_name,
-			Date:     t.String(),
+			Date:     t.Format("20060102150405"),
 		}
 		db.Create(&team)
 		result := "success"

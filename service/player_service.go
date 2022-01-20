@@ -92,7 +92,7 @@ func InsertPlayer(w http.ResponseWriter, r *http.Request) {
 				PlayerNumber: player_number,
 				PlayerName:   player_name,
 				TeamId:       team_id,
-				Date:         t.String(),
+				Date:         t.Format("20060102150405"),
 			}
 			db.Create(&player)
 			result = "success"
@@ -136,7 +136,7 @@ func UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 				PlayerNumber: player_number,
 				PlayerName:   player_name,
 				TeamId:       team_id,
-				Date:         t.String(),
+				Date:         t.Format("20060102150405"),
 			}
 			db.Model(&player).Where("player_id = ?", player_id).Update(&player)
 			if new_team[0].TeamName != old_team[0].TeamName {
