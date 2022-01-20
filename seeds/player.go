@@ -9,9 +9,7 @@ import (
 func (s Seed) PlayerSeed() {
 
 	for i := 0; i < 50; i++ {
-		//prepare the statement
 		stmt, _ := s.db.Prepare(`INSERT INTO player(player_name, player_number,team_id) VALUES (?,?,?)`)
-		// execute query
 		_, err := stmt.Exec(faker.Name(), rand.Intn(100), rand.Intn(20))
 		if err != nil {
 			panic(err)

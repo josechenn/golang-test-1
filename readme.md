@@ -1,5 +1,6 @@
 **Step By Step**
 1. Run ```https://github.com/josechenn/golang-test-1.git``` on terminal
+2. Run ```sudo cp .env.example .env```  to copy .env.example as .env
 2. Run ```docker-compose build``` to create mysql server for running the code
 4. Run ```go mod tidy``` to get missing and remove unused modules
 5. Run ```goose mysql "root:root@tcp(127.0.0.1:3306)/db?parseTime=true" up``` to migrate current migrations
