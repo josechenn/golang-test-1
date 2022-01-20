@@ -12,72 +12,6 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
-func TestGetPlayerByTeamID(t *testing.T) {
-
-	req, err := http.NewRequest("GET", "/get_player", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	q := req.URL.Query()
-	q.Add("team_id", "1")
-	req.URL.RawQuery = q.Encode()
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(service.ReturnPlayer)
-	handler.ServeHTTP(rr, req)
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
-}
-
-func TestGetPlayerByPlayerName(t *testing.T) {
-	req, err := http.NewRequest("GET", "/get_player", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	q := req.URL.Query()
-	q.Add("player_name", "Ms")
-	req.URL.RawQuery = q.Encode()
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(service.ReturnPlayer)
-	handler.ServeHTTP(rr, req)
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
-}
-
-func TestGetPlayerNotFound(t *testing.T) {
-	req, err := http.NewRequest("GET", "/get_player", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	q := req.URL.Query()
-	q.Add("player_name", "testing")
-	req.URL.RawQuery = q.Encode()
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(service.ReturnPlayer)
-	handler.ServeHTTP(rr, req)
-	if status := rr.Code; status != http.StatusNotFound {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
-}
-
-func TestGetAllPlayer(t *testing.T) {
-	req, err := http.NewRequest("GET", "/get_player", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(service.ReturnPlayer)
-	handler.ServeHTTP(rr, req)
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
-	}
-}
-
 func TestInsertPlayer(t *testing.T) {
 	body := new(bytes.Buffer)
 	writer := multipart.NewWriter(body)
@@ -118,6 +52,72 @@ func TestUpdatePlayer(t *testing.T) {
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(service.UpdatePlayer)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+func TestGetPlayerByTeamID(t *testing.T) {
+
+	req, err := http.NewRequest("GET", "/get_player", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	q := req.URL.Query()
+	q.Add("team_id", "1")
+	req.URL.RawQuery = q.Encode()
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(service.ReturnPlayer)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+func TestGetPlayerByPlayerName(t *testing.T) {
+	req, err := http.NewRequest("GET", "/get_player", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	q := req.URL.Query()
+	q.Add("player_name", "xyz")
+	req.URL.RawQuery = q.Encode()
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(service.ReturnPlayer)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+func TestGetPlayerNotFound(t *testing.T) {
+	req, err := http.NewRequest("GET", "/get_player", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	q := req.URL.Query()
+	q.Add("player_name", "testing")
+	req.URL.RawQuery = q.Encode()
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(service.ReturnPlayer)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusNotFound {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+func TestGetAllPlayer(t *testing.T) {
+	req, err := http.NewRequest("GET", "/get_player", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(service.ReturnPlayer)
 	handler.ServeHTTP(rr, req)
 	if status := rr.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",

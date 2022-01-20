@@ -41,6 +41,8 @@ func main() {
 	//route to insert new team, same name team could not be stored, because team name in soccer should be unique (small similaraty is acceptable)
 	router.HandleFunc("/insert_team", service.InsertTeam).Methods("POST")
 
+	router.HandleFunc("/count_total", service.CountTotalBox).Methods("GET")
+
 	http.Handle("/", router)
 	fmt.Println("Connected to port 1234")
 	log.Fatal(http.ListenAndServe(":1234", router))
