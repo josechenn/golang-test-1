@@ -31,13 +31,9 @@ func ReturnPlayer(w http.ResponseWriter, r *http.Request) {
 
 	db := config.GormConnect()
 	defer db.Close()
+	query := db.Table("player")
 
-	if team_id == nil && player_name == nil && player_id == nil {
-		exception := "no team_id or player_name or player_id provided"
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(exception)
-	} else {
-		query := db.Table("player")
+	if team_id != nil || player_name != nil || player_id != nil {
 		if team_id != nil {
 			query = query.Where("team_id = ?", team_id)
 		}
@@ -47,22 +43,22 @@ func ReturnPlayer(w http.ResponseWriter, r *http.Request) {
 		if player_name != nil {
 			query = query.Where("player_name LIKE ?", "%"+player_name[0]+"%")
 		}
-		query.Find(&player)
+	}
+	query.Find(&player)
 
-		if len(player) == 0 {
-			result := "no player found"
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(404)
-			json.NewEncoder(w).Encode(result)
-		} else {
-			data := model.PlayerData{
-				Data: player,
-			}
-
-			result = data
-			w.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(w).Encode(result)
+	if len(player) == 0 {
+		result := "no player found"
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(404)
+		json.NewEncoder(w).Encode(result)
+	} else {
+		data := model.PlayerData{
+			Data: player,
 		}
+
+		result = data
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(result)
 	}
 }
 
