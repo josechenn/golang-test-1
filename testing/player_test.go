@@ -83,7 +83,7 @@ func TestGetPlayerByPlayerName(t *testing.T) {
 		t.Fatal(err)
 	}
 	q := req.URL.Query()
-	q.Add("player_name", "xyz")
+	q.Add("player_name", "a")
 	req.URL.RawQuery = q.Encode()
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(service.ReturnPlayer)
