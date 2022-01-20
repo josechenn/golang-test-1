@@ -1,31 +1,35 @@
 package config
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
+	"regexp"
 
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
+	_ "github.com/joho/godotenv/autoload"
 )
 
-func Connect() *sql.DB {
-	godotenv.Load()
+const projectDirName = "golang-test-1"
 
-	db, err := sql.Open("mysql", os.Getenv("DB_URL"))
+func loadEnv() {
+	projectName := regexp.MustCompile(`^(.*` + projectDirName + `)`)
+	currentWorkDirectory, _ := os.Getwd()
+	rootPath := projectName.Find([]byte(currentWorkDirectory))
+
+	err := godotenv.Load(string(rootPath) + `/.env`)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Error loading .env file")
 	}
-
-	return db
 }
-
 func GormConnect() *gorm.DB {
+	loadEnv()
+	dbUrl := os.Getenv("DB_URL")
 
 	var err error
-	db, err := gorm.Open("mysql", os.Getenv("DB_URL"))
+	db, err := gorm.Open("mysql", dbUrl)
 
 	if err != nil {
 		fmt.Println(err)

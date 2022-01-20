@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func TestGetPlayerByTeamID(t *testing.T) {
@@ -30,13 +31,12 @@ func TestGetPlayerByTeamID(t *testing.T) {
 }
 
 func TestGetPlayerByPlayerName(t *testing.T) {
-
 	req, err := http.NewRequest("GET", "/get_player", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 	q := req.URL.Query()
-	q.Add("player_name", "ronaldo")
+	q.Add("player_name", "Ms")
 	req.URL.RawQuery = q.Encode()
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(service.ReturnPlayer)
@@ -48,7 +48,6 @@ func TestGetPlayerByPlayerName(t *testing.T) {
 }
 
 func TestGetPlayerNotFound(t *testing.T) {
-
 	req, err := http.NewRequest("GET", "/get_player", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -66,7 +65,6 @@ func TestGetPlayerNotFound(t *testing.T) {
 }
 
 func TestGetAllPlayer(t *testing.T) {
-
 	req, err := http.NewRequest("GET", "/get_player", nil)
 	if err != nil {
 		t.Fatal(err)
