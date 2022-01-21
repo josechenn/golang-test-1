@@ -87,6 +87,7 @@ func ReturnTeamDetail(w http.ResponseWriter, r *http.Request) {
 
 func InsertTeam(w http.ResponseWriter, r *http.Request) {
 	var team []*model.Team
+	var result string
 	db := config.GormConnect()
 	defer db.Close()
 
@@ -95,23 +96,21 @@ func InsertTeam(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	team_id, _ := strconv.Atoi(r.FormValue("team_id"))
 	team_name := r.FormValue("team_name")
 	db.Table("team").Where("team_name = ?", team_name).First(&team)
 	if len(team) > 0 {
-		result := "the team name that you inserted has been used, please insert another name"
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(result)
+		result = "the team name that you inserted has been used, please insert another name"
 	} else {
 		t := time.Now()
 		team := model.Team{
-			TeamId:   team_id,
 			TeamName: team_name,
 			Date:     t.Format("20060102150405"),
 		}
 		db.Create(&team)
-		result := "success"
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(result)
+		result = "success"
+
 	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(result)
 }

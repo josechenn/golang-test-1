@@ -30,7 +30,6 @@ func CountTotalBox(w http.ResponseWriter, r *http.Request) {
 				result = fmt.Sprintf("Ainun dapat membuat sebanyak %s box dan setiap box nya ada %s kue dan ada %s apel", strconv.Itoa(a1), strconv.Itoa(cakes/a1), strconv.Itoa(apple/a2))
 			} else {
 				result = "kue dan apel tidak bisa di bagi rata"
-				w.WriteHeader(500)
 			}
 		}
 	}

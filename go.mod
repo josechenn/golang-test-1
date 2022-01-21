@@ -8,6 +8,8 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 )
 
+require gopkg.in/validator.v2 v2.0.0-20210331031555-b37d688a7fb0 // indirect
+
 require (
 	github.com/bxcodec/faker/v3 v3.7.0
 	github.com/denisenkom/go-mssqldb v0.9.0 // indirect
